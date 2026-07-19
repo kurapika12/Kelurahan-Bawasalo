@@ -55,31 +55,26 @@
             </h1>
 
             <!-- Metadata -->
-
             <div
               class="flex flex-wrap gap-6 mt-6 text-sm text-slate-500 border-b pb-6"
             >
               <span>
                 <i class="fa-regular fa-calendar text-blue-600 mr-2"></i>
-
                 10 Juli 2026
               </span>
 
               <span>
-                <i class="fa-regular fa-user text-blue-600 mr-2"></i>
-
-                Admin Kelurahan
-              </span>
-
-              <span>
                 <i class="fa-solid fa-location-dot text-blue-600 mr-2"></i>
-
                 Desa Bawasalo
               </span>
 
               <span>
-                <i class="fa-regular fa-clock text-blue-600 mr-2"></i>
+                <i class="fa-regular fa-eye text-blue-600 mr-2"></i>
+                <span id="view-count">Memuat...</span> kali dilihat
+              </span>
 
+              <span>
+                <i class="fa-regular fa-bookmark text-blue-600 mr-2"></i>
                 4 menit baca
               </span>
             </div>
@@ -105,6 +100,14 @@
           <!-- Isi -->
 
           <article class="px-8 pb-10 text-[18px] leading-9 text-slate-700">
+            <p class="mb-6">
+              Kegiatan ini dibawakan oleh
+              <strong>Rezky Lestari Amalia Tumaruk</strong>, mahasiswa Fakultas
+              Peternakan Universitas Hasanuddin. Pelatihan dihadiri oleh pihak
+              Kelurahan Bawasalo, para Ketua Rukun Warga (RW), Ketua Rukun
+              Tetangga (RT), serta tokoh masyarakat yang turut berpartisipasi
+              dalam kegiatan.
+            </p>
             <p class="mb-6">
               Mahasiswa Kuliah Kerja Nyata Tematik (KKN-T) Gelombang 116
               Universitas Hasanuddin (Unhas) Posko Desa Bawasalo menggelar
@@ -168,5 +171,33 @@
         </div>
       </div>
     </main>
+    <script>
+      async function updateViewCount() {
+        const page = location.pathname.split("/").pop();
+        const storageKey = `viewed_${page}`;
+
+        try {
+          let url;
+
+          if (!localStorage.getItem(storageKey)) {
+            url = `https://api.countapi.xyz/hit/kelurahan-bawasalo/${page}`;
+            localStorage.setItem(storageKey, "true");
+          } else {
+            url = `https://api.countapi.xyz/get/kelurahan-bawasalo/${page}`;
+          }
+
+          const response = await fetch(url);
+          const data = await response.json();
+
+          document.getElementById("view-count").textContent =
+            data.value.toLocaleString("id-ID");
+        } catch (error) {
+          document.getElementById("view-count").textContent = "-";
+          console.error(error);
+        }
+      }
+
+      updateViewCount();
+    </script>
   </body>
 </html>

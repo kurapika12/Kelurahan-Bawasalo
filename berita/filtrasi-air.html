@@ -29,9 +29,7 @@
 
               <i class="fa-solid fa-chevron-right text-xs mx-3"></i>
 
-              <a href="../#berita" class="hover:text-blue-600">
-                Berita
-              </a>
+              <a href="../#berita" class="hover:text-blue-600"> Berita </a>
 
               <i class="fa-solid fa-chevron-right text-xs mx-3"></i>
 
@@ -67,6 +65,11 @@
               </span>
 
               <span>
+                <i class="fa-regular fa-eye text-blue-600 mr-2"></i>
+                <span id="view-count">Memuat...</span> kali dilihat
+              </span>
+
+              <span>
                 <i class="fa-regular fa-clock text-blue-600 mr-2"></i>
                 5 menit baca
               </span>
@@ -92,9 +95,17 @@
           <!-- Isi -->
           <article class="px-8 pb-10 text-[18px] leading-9 text-slate-700">
             <p class="mb-6">
+              Pelatihan ini dibawakan oleh
+              <strong>Lutfiyah Damayanti</strong>, mahasiswa Fakultas Ilmu
+              Kelautan dan Perikanan (FIKP) Universitas Hasanuddin. Kegiatan ini
+              dihadiri oleh pihak Kelurahan Bawasalo, Ketua Rukun Warga (RW),
+              Ketua Rukun Tetangga (RT), serta para ibu rumah tangga yang
+              mengikuti pelatihan dengan antusias.
+            </p>
+            <p class="mb-6">
               Mahasiswa Kuliah Kerja Nyata (KKN) Universitas Hasanuddin
               Gelombang 116 berhasil mengembangkan inovasi bernama
-              <strong>Ficati</strong>, media filtrasi air berbahan dasar bubuk
+              <strong>FICATI</strong>, media filtrasi air berbahan dasar bubuk
               cangkang tiram yang ramah lingkungan dan mudah dibuat.
             </p>
 
@@ -117,7 +128,7 @@
             <blockquote
               class="border-l-4 border-emerald-600 bg-emerald-50 p-6 rounded-r-xl italic text-emerald-900 my-8"
             >
-              "Program Ficati sangat membantu masyarakat pesisir yang menghadapi
+              "Program FICATI sangat membantu masyarakat pesisir yang menghadapi
               masalah air keruh. Bahan cangkang tiram mudah didapat dan proses
               pembuatannya juga sederhana."
             </blockquote>
@@ -125,7 +136,7 @@
             <p class="mb-6">
               Dalam pelatihan, mahasiswa menjelaskan manfaat cangkang tiram
               sebagai media filtrasi, tahapan pengolahan, serta
-              mendemonstrasikan secara langsung proses pembuatan Ficati. Peserta
+              mendemonstrasikan secara langsung proses pembuatan FICATI. Peserta
               juga diberikan kesempatan berdiskusi mengenai penggunaan dan
               perawatan media filtrasi tersebut.
             </p>
@@ -139,7 +150,7 @@
             </p>
 
             <p class="mb-6">
-              Mahasiswa KKN Universitas Hasanuddin berharap Ficati dapat terus
+              Mahasiswa KKN Universitas Hasanuddin berharap FICATI dapat terus
               dikembangkan sebagai alternatif filtrasi air yang ekonomis
               sekaligus mendukung pengelolaan limbah berbasis potensi lokal.
               Selain meningkatkan kualitas air, inovasi ini juga mendorong
@@ -162,5 +173,24 @@
         </div>
       </div>
     </main>
+    <script>
+      async function updateViewCount() {
+        try {
+          const response = await fetch(
+            "https://api.countapi.xyz/hit/kelurahan-bawasalo/filtrasi-air",
+          );
+
+          const data = await response.json();
+
+          document.getElementById("view-count").textContent =
+            data.value.toLocaleString("id-ID");
+        } catch (error) {
+          document.getElementById("view-count").textContent = "-";
+          console.error("Gagal memuat view count:", error);
+        }
+      }
+
+      updateViewCount();
+    </script>
   </body>
 </html>
